@@ -13,9 +13,10 @@ class _homeState extends State<home> {
   TextEditingController txtname = TextEditingController();
   TextEditingController txtprice = TextEditingController();
   TextEditingController txtquantity = TextEditingController();
-  List Name = [];
-  List Price = [];
-  List Quantity = [];
+
+  Model m1=Model();
+
+  List<Model> Plist=[];
 
   @override
   Widget build(BuildContext context) {
@@ -34,31 +35,42 @@ class _homeState extends State<home> {
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
                 controller: txtname,
-                decoration: InputDecoration(hintText: "Add Product"),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
+                    hintText: "Add Product"),
               ),
               SizedBox(
                 height: 10,
               ),
               TextFormField(
                 controller: txtprice,
-                decoration: InputDecoration(hintText: "Price"),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
+                    hintText: "Add Price"),
               ),
               SizedBox(
                 height: 10,
               ),
               TextFormField(
                 controller: txtquantity,
-                decoration: InputDecoration(hintText: "Quantity"),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(),
+                    hintText: "Add Quantity"),
               ),
               // SizedBox(
               //   height: 10,
               // ),
+
               Expanded(
                 child: ListView.builder(
-                  itemCount: Name.length,
+                  itemCount: Plist.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(10),
@@ -67,47 +79,116 @@ class _homeState extends State<home> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey),
+                            color: Colors.white),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text("${Name[index]}"),
+                            Text("${Plist[index].name}"),
                             SizedBox(
-                              width: 10,
+                              width: 25,
                             ),
-                            Text("${Price[index]}"),
+                            Text("${Plist[index].price}"),
                             SizedBox(
-                              width: 10,
+                              width: 25,
                             ),
-                            Text("${Quantity[index]}"),
+                            Text("${Plist[index].quantity}"),
                             SizedBox(
-                              width: 20,
+                              width: 35,
                             ),
                             IconButton(
                                 onPressed: () {
                                   setState(() {
-                                    Name.removeAt(index);
-                                    Price.removeAt(index);
-                                    Quantity.removeAt(index);
+                                    Plist.removeAt(index);
+
                                   });
                                 },
                                 icon: Icon(Icons.delete)),
+                            IconButton(
+                                onPressed: () {
+                                  txtname=TextEditingController(text: "${Plist[index].name}");
+                                  txtprice=TextEditingController(text: "${Plist[index].price}");
+
+                                  txtquantity=TextEditingController(text: "${Plist[index].quantity}");
+                                  setState(() {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              TextField(
+                                                controller: txtname,
+                                                decoration: InputDecoration(
+                                                    enabledBorder:
+                                                        OutlineInputBorder(),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(),
+                                                    hintText: "Add Price"),
+                                              ),
+                                              TextField(
+                                                controller: txtprice,
+                                                decoration: InputDecoration(
+                                                    enabledBorder:
+                                                        OutlineInputBorder(),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(),
+                                                    hintText: "Add Price"),
+                                              ),
+                                              TextField(
+                                                controller: txtquantity,
+                                                decoration: InputDecoration(
+                                                    enabledBorder:
+                                                        OutlineInputBorder(),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(),
+                                                    hintText: "Add Price"),
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      String name =txtname.text;
+                                                      String price =txtprice.text;
+                                                      String quantity =txtquantity.text;
+                                                      Model m1 =Model(price: price,name: name,quantity: quantity);
+                                                      Plist[index]=m1;
+                                                      Navigator.pop(context);
+
+                                                    });
+
+                                                  },
+                                                  child: Text("Add")),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  });
+                                },
+                                icon: Icon(Icons.edit)),
                           ],
                         ),
                       ),
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
           onPressed: () {
-            setState(() {
-              Name.add("${txtname.text}");
-              Price.add("${txtprice.text}");
-              Quantity.add("${txtquantity.text}");
-            },);
+            setState(
+              () {
+                Model m1= Model(quantity: txtquantity.text,price: txtprice.text,name: txtname.text);
+                    Plist.add(m1);
+
+              },
+            );
           },
         ),
       ),

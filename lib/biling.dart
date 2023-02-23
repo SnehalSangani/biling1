@@ -12,7 +12,7 @@ class biling extends StatefulWidget {
 class _bilingState extends State<biling> {
   @override
   Widget build(BuildContext context) {
-    Modal m1=ModalRoute.of(context)!.settings.arguments as Modal;
+    Model m1=ModalRoute.of(context)!.settings.arguments as Model;
     return SafeArea(
       child: Scaffold(
       body: Column(

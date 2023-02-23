@@ -1,6 +1,7 @@
-class Modal
+class Model
 {
   String? name,price,quantity;
 
-  Modal(this.name, this.price, this.quantity);
+
+  Model({this.name, this.price, this.quantity});
 }
