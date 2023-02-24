@@ -23,7 +23,6 @@ class _bilingState extends State<biling> {
             subtitle: Text("${m1.quantity}"),
             trailing: IconButton(onPressed: () {
                setState(() {
-
                });
             }, icon:Icon(Icons.delete),),
           ),

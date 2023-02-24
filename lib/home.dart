@@ -158,8 +158,7 @@ class _homeState extends State<home> {
                                                       Navigator.pop(context);
 
                                                     });
-
-                                                  },
+                                                    },
                                                   child: Text("Add")),
                                             ],
                                           ),
